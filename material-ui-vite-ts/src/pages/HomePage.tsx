@@ -1,15 +1,12 @@
 import React from 'react';
 import { AppBar, Container, Link } from '@mui/material';
 import { Link as RouterLink } from "react-router-dom";
+import PrimarySearchAppBar from '../components/PrimarySearchAppBar';
 
 const HomePage = () => {
     return (
         <>
-            <AppBar>
-                <Container>
-                    <h1>Home Page</h1>
-                </Container>
-            </AppBar>
+            <PrimarySearchAppBar />
             <Container>
                 <h1>Home Page</h1>
                 {/* Aboutページへのリンク */}

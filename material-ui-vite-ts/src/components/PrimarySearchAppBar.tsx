@@ -15,6 +15,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import { useNavigate } from 'react-router-dom';
 
 interface PrimarySearchAppBarProps {
   children: React.ReactNode;
@@ -63,6 +64,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
+  const navigator = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -83,6 +85,10 @@ export default function PrimarySearchAppBar() {
     handleMobileMenuClose();
   };
 
+  const handlePageClick = (itemname: string) => {
+    navigator('/' + itemname);
+  }
+
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -92,20 +98,21 @@ export default function PrimarySearchAppBar() {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+      vertical: 'top',
+      horizontal: 'right',
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+      vertical: 'top',
+      horizontal: 'right',
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={() => { handleMenuClose(); handlePageClick('profile')}}>ユーザ情報</MenuItem>
+      <MenuItem onClick={() => { handleMenuClose(); handlePageClick('account')}}>アカウント設定</MenuItem>
+      <MenuItem onClick={() => { handleMenuClose(); }}>サインアウト</MenuItem>
     </Menu>
   );
 
@@ -171,7 +178,7 @@ export default function PrimarySearchAppBar() {
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
-          >
+          >{/* TODOアイテムメニュークリック処理 */}
             <MenuIcon />
           </IconButton>
           <Typography
@@ -180,7 +187,7 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            サンプルアプリケーション
+            せいた
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -189,11 +196,12 @@ export default function PrimarySearchAppBar() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
-            />
+            /> {/* TODO検索処理 */}
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+            <IconButton size="large" aria-label="show 4 new mails" color="inherit"
+              onClick={() => { handlePageClick('message')}}>
               <Badge badgeContent={4} color="error">
                 <MailIcon />
               </Badge>
@@ -202,7 +210,7 @@ export default function PrimarySearchAppBar() {
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
-            >
+              onClick={() => { handlePageClick('notice')}}>
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
               </Badge>
